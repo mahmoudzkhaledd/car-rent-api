@@ -54,6 +54,10 @@ exports.adminRoles = [
     {
       "name": "حذف الحزمة",
       "ref": "DeletePackage"
-    }
+    },
+    {
+      "name": "تعديل الحزمة",
+      "ref": "EditPackage"
+    },
   ]
   
