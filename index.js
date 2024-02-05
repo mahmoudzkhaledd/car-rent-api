@@ -15,7 +15,7 @@ const xss = require('xss-clean')
 app.use(cors({
   origin: [
     'http://localhost:3001',
-    "https://car-rent-dashboard-rho.vercel.app",
+    "https://car-dashboard-one.vercel.app",
   ],
   credentials: true,
   exposedHeaders: ["set-cookie"],
