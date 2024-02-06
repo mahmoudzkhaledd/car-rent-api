@@ -10,9 +10,9 @@ exports.loginUser = asyncHandeler(async (req, res, next) => {
     let user;
     const userModel = res.locals.userModel;
     if (userModel != null) {
-        user = await User.findById(userModel.id);
+        user = await User.findById(userModel.id).populate('order');
     } else {
-        user = await User.findOne({ email: email });
+        user = await User.findOne({ email: email }).populate('order');
     }
 
     if (user == null) return res.status(401)

@@ -18,11 +18,9 @@ function matchRoute(incomingRoute) {
 
 
 exports.userValidatorMiddleware = async (req, res, next) => {
-
+    
     try {
-        
-        const token = (req.cookies.token || req.headers.token).split(' ')[1];
-        
+        const token = (req.headers.token).split(' ')[1];
         const userModel = jwt.verify(token, process.env.ACCESS_TOKEN_KEY);
         if (!userModel.verifiedEmail && process.env.APP_MODE != 'dev') {
             return res.status(455).json({

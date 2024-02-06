@@ -63,6 +63,11 @@ const schema = new mongoose.Schema({
         ref: "Package",
         default: null,
     },
+    order: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Order",
+        default: null,
+    },
     profilePic: String,
 }, { timestamps: true, });
 
