@@ -21,6 +21,10 @@ const schema = new mongoose.Schema({
         type: String,
         required: [true, "description is required"],
     },
+    freePeriod: {
+        type: Number,
+        default: 0,
+    },
     advantages: {
         type: [{
             type: packageAdvantgeSchema,
