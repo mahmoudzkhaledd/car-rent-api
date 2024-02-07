@@ -8,7 +8,6 @@ const { adminRolesValidator } = require('../../../middlewares/RolesValidator');
 const { editPackage } = require('./Services/EditPackage');
 const appRouter = require('express').Router();
 
-
 appRouter.get('/', adminRolesValidator(['SeeAllPackages']), getAllPackages);
 appRouter.get('/:id', adminRolesValidator(['SeeSpecificPackage']), getPackage);
 appRouter.put('/:id', adminRolesValidator(['EditPackage']), editPackage);

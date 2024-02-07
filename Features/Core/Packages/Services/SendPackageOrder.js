@@ -12,9 +12,14 @@ exports.sendPackageOrder = asyncHandeler(
                 msg: "Can't find the specified package!",
             });
         }
+        if (user.package != null) {
+            return res.status(400).json({
+                msg: "You are already subscribed in a package!",
+            });
+        }
         if (user.order != null) {
             return res.status(400).json({
-                msg: "You have sent an order.",
+                msg: "You already sent an order.",
             });
         }
         const order = await Order.create({
