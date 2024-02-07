@@ -29,14 +29,14 @@ exports.deleteCar = asyncHandeler(
             .populate([
                 {
                     path: 'thumbnailImage',
-                    select: { _id: 1, url: 1, userId: 1, },
+                    select: { _id: 1, url: 1, userId: 1, public_id: 1, },
                 },
                 {
                     path: 'images',
-                    select: { _id: 1, url: 1, userId: 1, },
+                    select: { _id: 1, url: 1, userId: 1, public_id: 1, },
                 },
             ]);
-        if (car == null) { 
+        if (car == null) {
             return res.status(400).json({
                 msg: "Car not found."
             });
