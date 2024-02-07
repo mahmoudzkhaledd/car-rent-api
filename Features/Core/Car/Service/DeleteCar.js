@@ -13,11 +13,15 @@ exports.deleteCar = asyncHandeler(
         const userModel = res.locals.userModel;
         const carId = req.params.id;
         if (!ObjectId.isValid(carId)) {
-            return res.sendStatus(400);
+            return res.status(400).json({
+                msg: "Car not found."
+            });
         }
         const dependRentsCount = await Rent.count({ carId: carId });
         if (dependRentsCount != 0) {
-            return res.sendStatus(401);
+            return res.status(401).json({
+                msg: "There are rents depends on this car, please wait until the rent ends and try again."
+            });
         }
         const car = await Car.findOne({ _id: carId, userId: userModel.id, })
             .populate([
@@ -30,6 +34,11 @@ exports.deleteCar = asyncHandeler(
                     select: { _id: 1, url: 1, userId: 1, },
                 },
             ]);
+        if (car == null) { 
+            return res.status(400).json({
+                msg: "Car not found."
+            });
+        }
         if (car.thumbnailImage) {
             await cloudinary.uploader.destroy(car.thumbnailImage.public_id);
             await Image.deleteOne({
@@ -46,7 +55,9 @@ exports.deleteCar = asyncHandeler(
                     userId: userModel.id,
                 });
             } else {
-                return res.sendStatus(410);
+                return res.status(410).json({
+                    msg: "Failed to delete car image from the server"
+                });
             }
         }
         await car.deleteOne();
