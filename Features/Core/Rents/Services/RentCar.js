@@ -1,6 +1,7 @@
 const asyncHandeler = require('express-async-handler');
 const Car = require('../../../../Models/Car');
 const Rent = require('../../../../Models/Rent');
+const History = require('../../../../Models/HistoryRecord');
 function doDateRangesIntersect(start1, end1, start2, end2) {
     return start1 <= end2 && end1 >= start2;
 }
@@ -43,8 +44,7 @@ exports.rentCar = asyncHandeler(
                 });
             }
         }
-        console.log(userModel.id);
-        
+
         const rent = await Rent.create({
             startingDate,
             endingDate,
@@ -56,6 +56,11 @@ exports.rentCar = asyncHandeler(
             remainingPrice,
             userId: userModel.id,
             carId: carId,
+        });
+        await History.create({
+            userId: userModel.id,
+            rentId: rent._id,
+            type: 'rent_car',
         });
         res.status(200).json({ rent });
     }

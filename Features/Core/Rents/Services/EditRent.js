@@ -60,6 +60,7 @@ exports.editRent = asyncHandeler(
             paidPrice,
             remainingPrice,
         });
+        
         res.status(200).json({ result });
     }
 )

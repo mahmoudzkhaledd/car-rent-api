@@ -4,6 +4,7 @@ const Image = require('../../../../Models/Image');
 const ObjectId = require('mongoose').Types.ObjectId;
 const { uploadImage } = require('../../../../services/Cloudinary/UploadImage');
 
+const History = require('../../../../Models/HistoryRecord');
 exports.updateCar = asyncHandeler(
     async (req, res, next) => {
         const userModel = res.locals.userModel;
@@ -47,6 +48,13 @@ exports.updateCar = asyncHandeler(
             notes,
             thumbnailImage: updatedImage != null ? updatedImage._id : car.thumbnailImage,
         });
+        if (carUpdated.modifiedCount != 0) {
+            await History.create({
+                userId: userModel.id,
+                carId: car._id,
+                type: 'edit_car',
+            });
+        }
         res.sendStatus(carUpdated.modifiedCount != 0 ? 200 : 400);
     }
 )

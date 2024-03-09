@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
-    userId:{
+    userId: {
         type: mongoose.Schema.ObjectId,
         ref: "User",
         required: [true, "User Id is required !"],
@@ -9,13 +9,17 @@ const schema = new mongoose.Schema({
     carId: {
         type: mongoose.Schema.ObjectId,
         ref: "Car",
-        index:true,
+        index: true,
         required: [true, "Car Id is required !"],
     },
     startingDate: {
         type: String,
         trim: true,
         required: [true, "Starting Date is required !"],
+    },
+    finished: {
+        type: Boolean,
+        default: false,
     },
     endingDate: {
         type: String,
@@ -39,7 +43,7 @@ const schema = new mongoose.Schema({
     },
     totalPrice: {
         type: Number,
-        
+
         required: [true, "Total Price is required !"],
     },
     paidPrice: {

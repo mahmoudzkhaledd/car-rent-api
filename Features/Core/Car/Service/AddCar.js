@@ -1,6 +1,7 @@
 const asyncHandeler = require('express-async-handler');
 const Car = require('../../../../Models/Car');
 const Image = require('../../../../Models/Image');
+const History = require('../../../../Models/HistoryRecord');
 const { uploadImage } = require('../../../../services/Cloudinary/UploadImage');
 exports.addNewCar = asyncHandeler(
     async (req, res, next) => {
@@ -46,6 +47,11 @@ exports.addNewCar = asyncHandeler(
                 }
 
             }
+            await History.create({
+                userId: userModel.id,
+                carId: car._id,
+                type: 'add_car',
+            });
             res.status(200).json({ car });
         } catch (err) {
             if (err.code == 11000) {

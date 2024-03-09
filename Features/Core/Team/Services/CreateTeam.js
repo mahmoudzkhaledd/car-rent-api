@@ -1,5 +1,6 @@
 const asyncHandeler = require('express-async-handler');
 const Team = require('../../../../Models/Team');
+const History = require('../../../../Models/HistoryRecord');
 
 exports.createTeam = asyncHandeler(
     async (req, res, next) => {
@@ -11,6 +12,11 @@ exports.createTeam = asyncHandeler(
  
         const team = await Team.create({ name, leader: userModel.id });
         await team.populate('leader');
+        await History.create({
+            userId: userModel.id,
+            temId: team._id,
+            type: 'create_team',
+        });
         res.status(200).json({ team });
     }
 )
